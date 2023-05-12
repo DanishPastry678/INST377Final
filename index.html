@@ -1,18 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>Movie Recommendation Engine</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
+<html>
+<head>
+  <title>Movie Recommendation Engine</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
     <h1>Movie Recommendation Engine</h1>
-    <form>
-      <label for="search-input">Enter a movie name or genre:</label>
-      <input type="text" id="search-input" name="search-input" placeholder="Ex: Top Gun">
-      <button type="submit" id="search-button">Search</button>
-    </form>
-    <div id="result-container"></div>
-    <script src="script.js"></script>
-  </body>
+  </header>
+  <main>
+    <div class="container">
+      <form>
+        <label for="search-input">Search for a movie:</label>
+        <input type="text" id="search-input" placeholder="Enter a movie:">
+        <button type="submit">Search</button>
+      </form>
+      <div id="result-container"></div>
+    </div>
+  </main>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="script.js"></script>
+</body>
 </html>

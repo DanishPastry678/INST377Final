@@ -1,21 +1,42 @@
-const form = document.querySelector('form');
-const searchInput = document.querySelector('#search-input');
-const resultContainer = document.querySelector('#result-container');
+const form = document.querySelector("#searchForm");
+const search = document.querySelector("#searchInput");
+const moviesContainer = document.querySelector("#moviesContainer");
 
-form.addEventListener('submit', async (event) => {
+const API_KEY = "f164bc301c5a4c6dbde4e05c540e619c";
+
+form.addEventListener("submit", async (event) => {
   event.preventDefault();
-  const query = searchInput.value;
-  const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=YOUR_API_KEY&query=${query}`);
-  const data = await response.json();
-  const movies = data.results;
-  resultContainer.innerHTML = '';
-  movies.forEach((movie) => {
-    const movieElement = document.createElement('div');
-    movieElement.innerHTML = `
-      <img src="https://image.tmdb.org/t/p/w185${movie.poster_path}" alt="${movie.title}">
-      <h2>${movie.title}</h2>
-      <p>${movie.overview}</p>
-    `;
-    resultContainer.appendChild(movieElement);
-  });
+
+  const searchTerm = search.value;
+
+  try {
+    const results = await searchMovies(searchTerm);
+    displayMovies(results);
+  } catch (error) {
+    console.error(error);
+  }
 });
+
+async function searchMovies(searchTerm) {
+  const url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${searchTerm}`;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data.results;
+}
+
+function displayMovies(results) {
+  let html = "";
+  results.forEach((result) => {
+    const { title, poster_path, overview } = result;
+    html += `
+      <div class="movie">
+        <img src="https://image.tmdb.org/t/p/w500/${poster_path}" alt="${title}" />
+        <div class="movie-info">
+          <h3>${title}</h3>
+          <p>${overview}</p>
+        </div>
+      </div>
+    `;
+  });
+  moviesContainer.innerHTML = html;
+}
